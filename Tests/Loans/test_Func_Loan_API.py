@@ -18,6 +18,7 @@ class TestBankLoanAPI(BankAPIBase):
             (20000000, 500000, False)  # (Negative) Expected to not get loan approval due to insufficient funds
         ]
     )
+    @pytest.mark.Regression
     def test_valid_loan(self, loan_amount, down_payment, expected_approval):
         """
         Test case for approving or rejecting a loan request and verifying account balance and loan approval status.
