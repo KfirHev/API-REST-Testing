@@ -59,6 +59,13 @@ def setup_browser_options(browser, run_env):
 
 @pytest.fixture(scope='class')
 def setup_browser(request):
+
+    # Check if the test has the "use_browser" marker (most of the tests are API)
+    if 'use_browser' not in request.node.keywords:
+        # If the test doesn't have the marker, skip browser initialization
+        yield
+        return
+
     browser_name = request.config.getoption('browser_type')
     run_env = request.config.getoption('run_env')
     driver = None
@@ -90,7 +97,6 @@ def setup_browser(request):
     request.cls.driver = driver
 
     yield
-    time.sleep(4)
     driver.quit()
 
 
