@@ -20,6 +20,8 @@ class TestBankAccountsAPI(BankAPIBase):
             raise
 
     # @pytest.mark.skip
+    @pytest.mark.Sanity
+    @pytest.mark.Regression
     def test_open_new_account(self, initial_balance):
         """
         Test case for creating a new bank account for a specific customer.
