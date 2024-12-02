@@ -24,7 +24,7 @@ def pytest_addoption(parser):
         "--browser_type", action="store", default="chrome", help="Specify the browser: chrome, firefox, or edge"
     )
     parser.addoption(
-        "--run_env", action="store", default="docker", help="Specify the environment: local or docker"
+        "--run_env", action="store", default="local", help="Specify the environment: local or docker"
     )
 
 
@@ -40,12 +40,8 @@ def setup_browser_options(browser, run_env):
             options.add_argument("--disable-dev-shm-usage")
             options.add_argument("--disable-gpu")
         else:
-            options.add_argument("--headless")
-            options.add_argument("--headless")
-            options.add_argument("--no-sandbox")
-            options.add_argument("--disable-dev-shm-usage")
-            options.add_argument("--disable-gpu")
-            #options.add_argument("--start-maximized")
+            #options.add_argument("--headless")
+            options.add_argument("--start-maximized")
             options.add_argument("--ignore-certificate-errors")
             options.add_argument("--disable-autofill")
             options.add_argument("--disable-autocomplete")
@@ -90,7 +86,7 @@ def setup_browser(request):
         raise ValueError("You should choose a browser between chrome, firefox, or edge")
 
     driver.implicitly_wait(4)
-    driver.get("https://www.saucedemo.com/")
+    driver.get("http://localhost:8090/parabank/")
     request.cls.driver = driver
 
     yield

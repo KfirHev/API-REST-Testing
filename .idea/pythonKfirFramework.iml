@@ -7,7 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/Screenshots" />
       <excludeFolder url="file://$MODULE_DIR$/Tests/Reports" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.12 (KfirDemoAutomation)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.12 (KfirDemoAPIAuto)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TestRunnerService">

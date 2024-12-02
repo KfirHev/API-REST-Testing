@@ -1,162 +1,73 @@
 from Utils.BaseClass import BaseClass
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
-from PageObjects.ProductsPage import ProductsPage
 
-
-# TODO: Catch exceptions in BaseClass if necessary
 
 class HomePage(BaseClass):
-    """Page object model for the Home Page, handling login interactions and element verifications."""
+    """Page object model for the Home Page, handling user interactions like login and registration."""
 
     # Locators for elements on the Home Page
-    l_logo = (By.CSS_SELECTOR, ".login_logo")
-    l_user_name = (By.ID, 'user-name')
-    l_pw = (By.ID, 'password')
-    l_login_btn = (By.ID, 'login-button')
-    l_valid_users = (By.ID, 'login_credentials')
-    l_valid_pw = (By.CSS_SELECTOR, '.login_password')
-    l_err_msg = (By.CSS_SELECTOR, 'h3')
-    l_err_msg_btn = (By.CSS_SELECTOR, 'h3 button')
+    l_register_link = (By.LINK_TEXT, "Register")
+    l_user_name = (By.CSS_SELECTOR, "input[name='username']")
+    l_user_pw = (By.CSS_SELECTOR, "input[name='password']")
+    l_login_btn = (By.CSS_SELECTOR, "input[value='Log In']")
+    l_first_name = (By.ID, "customer.firstName")
+    l_last_name = (By.ID, "customer.lastName")
+    l_address = (By.ID, "customer.address.street")
+    l_city = (By.ID, "customer.address.city")
+    l_state = (By.ID, "customer.address.state")
+    l_zip = (By.ID, "customer.address.zipCode")
+    l_phone = (By.ID, "customer.phoneNumber")
+    l_ssn = (By.ID, "customer.ssn")
+    l_form_user_name = (By.ID, "customer.username")
+    l_form_pwd = (By.ID, "customer.password")
+    l_form_confirm_pw = (By.ID, "repeatedPassword")
+    l_register_btn = (By.CSS_SELECTOR, "input[value='Register']")
 
     def __init__(self, driver):
         """
         Initializes the HomePage object with the WebDriver instance.
 
-        :param driver: WebDriver instance for interacting with the page elements.
+        Args:
+            driver (WebDriver): The WebDriver instance for interacting with the page elements.
         """
         super().__init__()
         self._driver = driver
 
-    def get_title(self) -> str:
+    def fill_register_form(self):
         """
-        Fetches the page title.
+        Fills out and submits the registration form with pre-defined test data.
 
-        :return: The title of the current page.
+        This simulates a user registering on the platform by providing test inputs
+        for all required fields.
         """
-        return self._driver.title
+        # Click the "Register" link to navigate to the registration form
+        self._driver.find_element(*self.l_register_link).click()
 
-    def is_logo_displayed(self) -> bool:
+        # Fill out the form fields with predefined data
+        self._driver.find_element(*self.l_first_name).send_keys("Luke")
+        self._driver.find_element(*self.l_last_name).send_keys("Skywalker")
+        self._driver.find_element(*self.l_address).send_keys("123 Happy St")
+        self._driver.find_element(*self.l_city).send_keys("Mos Eisley")
+        self._driver.find_element(*self.l_state).send_keys("Outer Rim")
+        self._driver.find_element(*self.l_zip).send_keys("45678")
+        self._driver.find_element(*self.l_phone).send_keys("555-1234")
+        self._driver.find_element(*self.l_ssn).send_keys("987-65-4321")
+        self._driver.find_element(*self.l_form_user_name).send_keys("JediMasterLuke")
+        self._driver.find_element(*self.l_form_pwd).send_keys("Realpass889$")
+        self._driver.find_element(*self.l_form_confirm_pw).send_keys("Realpass889$")
+
+        # Submit the registration form
+        self._driver.find_element(*self.l_register_btn).click()
+
+    def login(self):
         """
-        Verifies if the login logo is displayed on the page.
+        Logs in the user by filling in the username and password fields and clicking the login button.
 
-        :return: True if the logo is displayed, False otherwise.
+        This simulates a user logging into the platform with predefined test credentials.
         """
-        try:
-            return self._driver.find_element(*HomePage.l_logo).is_displayed()
-        except NoSuchElementException:
-            return False
+        # Enter username and password
+        self._driver.find_element(*self.l_user_name).send_keys("JediMasterLuke")
+        self._driver.find_element(*self.l_user_pw).send_keys("Realpass889$")
 
-    def is_login_btn_displayed(self) -> bool:
-        """
-        Verifies if the login button is displayed on the page.
-
-        :return: True if the login button is displayed, False otherwise.
-        """
-        try:
-            return self._driver.find_element(*HomePage.l_login_btn).is_displayed()
-        except NoSuchElementException:
-            return False
-
-    def get_valid_user_name(self) -> list:
-        """
-        Extracts the list of valid usernames from the login credentials section.
-
-        :return: A list of valid usernames found in the 'login_credentials' div.
-        """
-        try:
-            user_div = self._driver.find_element(*HomePage.l_valid_users)
-            # Split the content by <br> tags to get each username
-            usernames = user_div.get_attribute('innerHTML').split('<br>')
-
-            # Extract the first username from the div (skip any preceding headers)
-            first_username = usernames[0].split('>')[-1]
-
-            # Clean up the list by stripping whitespace and filtering out empty elements
-            return [first_username] + [username.strip() for username in usernames[1:] if username.strip()]
-        except NoSuchElementException:
-            return []  # Return an empty list if the element is not found
-
-    def get_password(self) -> str:
-        """
-        Extracts the password from the login password section.
-
-        :return: The valid password provided on the page.
-        """
-        try:
-            # Locate the password div and extract its inner HTML
-            password_div = self._driver.find_element(*HomePage.l_valid_pw)
-            full_text = password_div.get_attribute('innerHTML')
-
-            # Extract password from the HTML content by splitting after </h4> tag
-            password = full_text.split('</h4>')[-1].strip()
-            return password
-        except NoSuchElementException:
-            return ""  # Return an empty string if the password div is not found
-
-    def get_user_hint(self) -> str:
-        """
-        Retrieves the placeholder text for the username field.
-
-        :return: Placeholder text for the username input field.
-        """
-        return self._driver.find_element(*self.l_user_name).get_attribute('placeholder')
-
-    def get_password_hint(self) -> str:
-        """
-        Retrieves the placeholder text for the password field.
-
-        :return: Placeholder text for the password input field.
-        """
-        return self._driver.find_element(*self.l_pw).get_attribute('placeholder')
-
-    def login(self, user='standard_user', pw='secret_sauce') -> ProductsPage:
-        """
-        Performs a login using the provided username and password.
-
-        Clears any existing inputs in the username and password fields, enters the new credentials,
-        and clicks the login button to proceed to the Products Page.
-
-        :param user: The username to enter in the login form.
-        :param pw: The password to enter in the login form.
-        :return: ProductsPage object representing the products page after login.
-        """
-        self.clear_username()
-        self._driver.find_element(*HomePage.l_user_name).send_keys(user)
-        self.clear_password()
-        self._driver.find_element(*HomePage.l_pw).send_keys(pw)
-        self._driver.find_element(*HomePage.l_login_btn).click()
-        return ProductsPage(self._driver)
-
-    def clear_username(self):
-        """
-        Clears the username input field.
-
-        :return: None
-        """
-        self._driver.find_element(*HomePage.l_user_name).clear()
-
-    def clear_password(self):
-        """
-        Clears the password input field.
-
-        :return: None
-        """
-        self._driver.find_element(*HomePage.l_pw).clear()
-
-    def get_login_error_message(self):
-        """
-        Fetches the error message displayed after a failed login attempt.
-
-        :return: The login error message as a string.
-        """
-        return self._driver.find_element(*HomePage.l_err_msg).text
-
-    def clear_login_error_message(self):
-        """
-        Clears the login error message by clicking the error button (usually an 'X' button).
-
-        :return: None
-        """
-        self._driver.find_element(*HomePage.l_err_msg_btn).click()
-
+        # Click the login button to submit the form
+        self._driver.find_element(*self.l_login_btn).click()
