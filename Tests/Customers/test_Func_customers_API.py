@@ -19,6 +19,7 @@ class TestBankCustomersAPI(BankAPIBase):
         return init_balance
 
     #@pytest.mark.skip
+    @pytest.mark.Regression
     def test_get_customer_detail(self):
         """
         Test to retrieve customer details and validate key fields.
@@ -41,6 +42,8 @@ class TestBankCustomersAPI(BankAPIBase):
                  f"SSN: {response.get('ssn')}")
 
     # @pytest.mark.skip
+    @pytest.mark.Sanity
+    @pytest.mark.Regression
     def test_deposit_and_balance_update(self, initial_balance):
         """
         Tests deposit functionality and verifies the balance is updated correctly.
@@ -68,6 +71,8 @@ class TestBankCustomersAPI(BankAPIBase):
         log.info("Deposit and balance update test passed successfully.")
 
     #@pytest.mark.skip
+    @pytest.mark.Sanity
+    @pytest.mark.Regression
     def test_withdrawal_and_balance_update(self, initial_balance):
         """
         Tests withdrawal functionality and verifies the balance is updated correctly.
@@ -95,6 +100,7 @@ class TestBankCustomersAPI(BankAPIBase):
         log.info("Withdrawal and balance update test passed successfully.")
 
     #@pytest.mark.skip
+    @pytest.mark.Regression
     def test_deposit_and_withdrawal(self, initial_balance):
         """
         Tests a sequence of deposit and withdrawal, ensuring the balance reflects both transactions.
@@ -126,6 +132,7 @@ class TestBankCustomersAPI(BankAPIBase):
         log.info("Deposit and withdrawal test passed successfully.")
 
     #@pytest.mark.skip
+    @pytest.mark.Regression
     def test_pay_bill(self, initial_balance):
         """
         Tests a sequence of bill payment with fake data.
@@ -181,6 +188,7 @@ class TestBankCustomersAPI(BankAPIBase):
         ]
     )
     #@pytest.mark.skip
+    @pytest.mark.Regression
     def test_buy_position(self,source_account, pos_name, pos_symbol, number_of_shares, share_price):
         """
         Tests the ability to buy a position.
