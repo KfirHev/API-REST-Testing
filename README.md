@@ -2,9 +2,13 @@
 
 ![image](https://github.com/user-attachments/assets/ba8df7ef-9fd9-4831-b6cf-17f487e01f27)
 
-**An automation framework for testing [SauceDemo](https://www.saucedemo.com/) with Selenium and pytest.**  
-Designed for high flexibility and modularity, the framework facilitates efficient browser-based testing and provides HTML reports with screenshots and logging for thorough test insights.  
-This framework's infrastructure can support any web-based application with minimal modifications.  
+# API Testing Framework with Python, pytest, Selenium, and Locust
+
+An API testing framework simulating a bank account environment using **Parasoft Parabank** and **HSQDB**.  
+This project includes **functional**, **negative**, and **performance tests**, leveraging **Docker** for seamless execution of the "parasoft/parabank:latest" container.  
+**Locust** is used for performance testing, while **pytest** is utilized for running and managing test cases.  
+With a focus on modularity and scalability, the framework is designed to support comprehensive API testing and can be easily extended for other web-based applications.
+
 
 ## Project Structure
 
@@ -55,7 +59,7 @@ KfirDemoAutomation/
 ## Getting Started
 **Example ETE test**
 
-![TestFullPurchas](https://github.com/user-attachments/assets/37226fe2-e876-40e3-be14-ed91e3a1c0cf)
+![TestFullPurchase](https://github.com/user-attachments/assets/37226fe2-e876-40e3-be14-ed91e3a1c0cf)
 
 
 ### 🛠 Prerequisites
