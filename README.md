@@ -38,6 +38,7 @@ API-REST-Testing/
 |   Templates for test creation
 |
 ├── Tests/  Organized test scripts
+|  |
 │  ├── Functional/
 |  |   Functional test cases
 |  |
