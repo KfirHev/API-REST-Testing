@@ -1,6 +1,6 @@
 # API-REST-Testing
 
-![image](https://github.com/user-attachments/assets/ba8df7ef-9fd9-4831-b6cf-17f487e01f27)
+![image](https://github.com/user-attachments/assets/f49972e6-4dd9-4d6e-a488-a8ab7d70b7c8)
 
 # API Testing Framework with Python, pytest, Selenium, and Locust
 
