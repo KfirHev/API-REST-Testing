@@ -12,7 +12,7 @@ With a focus on modularity and scalability, the framework is designed to support
 
 ## Project Structure
 
-KfirDemoAutomation/  
+API-REST-Testing/  
 ├── .venv/  
 │       Python virtual environment (git ignored)  
 │  
@@ -30,20 +30,15 @@ KfirDemoAutomation/
 │  
 ├── Screenshots/  
 │       Failure screenshots for reports, dynamically generated (git ignored)  
-│  
+│
 ├── Templates/  
-│       Test templates to aid test creation  
-│  
-├── TestData/  
-│       Dictionary-style test data for data-driven tests  
+│       Test templates to aid test creation
 │  
 ├── Tests/  
-│       Test scripts organized by feature (e.g., login, products)  
-│   └── conftest.py  
-│       Setup and teardown, browser configuration  
+│       Test scripts organized by testing classes (e.g., Functional,Performance)
 │  
 ├── Utils/  
-│       BaseClass with common utilities and locators to avoid redundancy  
+│       BaseClass with common utilities 
 │  
 ├── Dockerfile  
 │       Configuration for containerized testing  
