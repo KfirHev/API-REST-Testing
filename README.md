@@ -9,69 +9,101 @@ This project includes **functional**, **negative**, and **performance tests**, l
 **Locust** is used for performance testing, while **pytest** is utilized for running and managing test cases.  
 With a focus on modularity and scalability, the framework is designed to support comprehensive API testing and can be easily extended for other web-based applications.
 
-
 ## Project Structure
-
-API-REST-Testing/  
-├── .venv/  
-│       Python virtual environment (git ignored)  
-│  
-├── browserdriver/  
-│       WebDriver executables for supported browsers  
-│  
-├── Logs/  
-│       Folder for log files, generated at runtime (git ignored)  
-│  
-├── PageObjects/  
-│       Page classes containing element locators and actions  
-│  
-├── Reports/  
-│       HTML test reports with embedded failure screenshots (git ignored)  
-│  
-├── Screenshots/  
-│       Failure screenshots for reports, dynamically generated (git ignored)  
+```
+API-REST-Testing/
+|
+├── .venv/
+|    Python virtual environment (git ignored)
+|
+├── browserdriver/
+|   WebDriver executables for supported browsers
+|
+├── libs/
+|   Additional libraries for the project
+|
+├── Logs/
+|   Folder for runtime log files (git ignored)
+|
+├── PageObjects/
+|   Page classes with locators and actions
+|
+├── Reports/
+|   HTML test reports with embedded screenshots (git ignored)
+|
+├── TEMP/
+|   Temporary files (usage unspecified)
+|
+├── Templates/
+|   Templates for test creation
+|
+├── Tests/  Organized test scripts
+│  ├── Functional/
+|  |   Functional test cases
+|  |
+│  ├── Integration/ 
+|  |   Integration test cases
+|  |
+│  ├── Negative/ 
+|  |   Negative test cases
+|  |
+│  ├── Performance/
+|  |   Performance test cases and locust files
+|  |
+│  └── bank_api_swagger.yaml 
+|     Swagger API definition for performance testing
+|
+├── Utils/
+|   Utility files and base classes
+|
+├── conftest.py
+|    pytest configuration
+|
+├──Dockerfile_all_in_one 
+|  Docker configuration for all-in-one setup
 │
-├── Templates/  
-│       Test templates to aid test creation
-│  
-├── Tests/  
-│       Test scripts organized by testing classes (e.g., Functional,Performance)
-│  
-├── Utils/  
-│       BaseClass with common utilities 
-│  
-├── Dockerfile  
-│       Configuration for containerized testing  
-│  
-└── requirements.txt  
-        Python dependencies for the project  
-
-
+├── Dockerfile_python
+|   Docker configuration for Python-specific setup
+|
+├── .dockerignore
+|   Files to exclude from Docker builds
+|
+├── .gitignore
+|    Files to exclude from Git
+|
+├── README.md
+|   Project documentation
+|
+└── requirements.txt # Python dependencies for the project
+```
 ---
 **🚩Note:** The `Logs/`, `Reports/`, and `Screenshots/` directories are git ignored due to the frequent generation of files that are not necessary for version control.
 
 
 ## Getting Started
-**Example ETE test**
 
-![TestFullPurchase](https://github.com/user-attachments/assets/37226fe2-e876-40e3-be14-ed91e3a1c0cf)
+![image](https://github.com/user-attachments/assets/d6de4289-3562-4c95-a937-c58ae0a19253)
+
+
+**Example ETE test**
 
 
 ### 🛠 Prerequisites
-- **Python 3.x**  
+- **Python 3.7 or higher**  (Locust dependency)
 - **Selenium WebDriver**  
-- **Docker** (optional, for containerized tests)  
+- **parasoft/parabank:latest Docker**
+- **Python Docker** (optional, for pytest containerized tests)  
 
 ### Installation
 
 1. Clone this repository to your local machine:
     ```bash
-    git clone https://github.com/KfirHev/KfirDemoAutomation.git
+    git clone https://github.com/KfirHev/API-REST-Testing.git
     ```
 
 2. Navigate into the project directory:
     ```bash
-    cd KfirDemoAutomation
+    cd API-REST-Testing
     ```
 
 3. Install the required Python packages:
@@ -83,7 +115,7 @@ API-REST-Testing/
 
 **Example run via PyCharm**
 
-https://github.com/user-attachments/assets/d38be0c4-8d73-4655-af75-31a1b375bab2
+Add video 
 
 ### Running Tests
 
@@ -130,9 +162,12 @@ https://github.com/user-attachments/assets/c686d899-91cc-4702-9b9a-3215943d28af
 
 Future updates will aim to extend the functionality and robustness of this framework, with potential additions including:
 
-- Demonstration of API testing and backend database integration
-- Enhanced reporting capabilities, such as Allure integration for richer test insights
-- Detailed README updates, including Docker command instructions ,setting up Jenkins job/pipeline and example screenshots for a clearer demo experience 
+- Detailed README updates, including Docker command instructions ,setting up Jenkins job/pipeline and example screenshots for a clearer demo experience
+- Adding negatvie test (failures 5XX 4XX) 
+- Adding mock container for simulation of edge cases (network traffic delay) using WireMock container / service (TBD)
+- Adding locust stress files
+- Add the recovery instructions for DB corruption
+- Add Locust reports example
 
 ## Contributing
 
