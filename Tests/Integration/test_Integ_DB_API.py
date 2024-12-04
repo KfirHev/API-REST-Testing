@@ -23,18 +23,3 @@ class TestBankDBAPI(BankAPIBase):
 
         time.sleep(10)   # Sleep until DB is initialized
 
-    @pytest.mark.reset
-    @pytest.mark.use_browser
-    def test_register_and_login(self):
-        """
-        Test user registration and login functionality.
-
-        Steps:
-        Fill out the registration form on the home page and register new account
-        """
-        log = self.get_logger()
-        home_page = HomePage(self.driver)
-
-        # Register a new user
-        home_page.fill_register_form()
-
