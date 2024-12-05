@@ -1,5 +1,4 @@
 import pytest
-from faker import Faker
 from Utils.BankAPIBase import BankAPIBase
 
 
