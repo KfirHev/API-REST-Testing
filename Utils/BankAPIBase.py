@@ -49,17 +49,22 @@ class BankAPIBase(BaseClass):
         """
         Creates a new account for a given customer.
 
+        This method attempts to create a new bank account for a specific customer. If the operation is successful, it returns the account ID. In case of failure, it returns a dictionary containing error details.
+
         Args:
-            customer_id (int): ID of the customer.
-            account_type (int): Type of account to create (e.g., 1 for CHECKING).
+            customer_id (int): ID of the customer requesting the account creation.
+            account_type (int): Type of account to create (e.g., 1 for CHECKING, 2 for SAVINGS).
             source_account_id (int): ID of the funding source account.
 
         Returns:
-            int: ID of the newly created account.
+            dict: On error, returns a dictionary with the keys:
+                - "error" (str): The HTTP error code and message (e.g., "400 Client Error").
+                - "details" (str): Additional details from the server response.
+            int: On success, returns the ID of the newly created account.
 
         Raises:
-            HTTPError: If the account creation request fails.
-            ValueError: If the response does not contain an account ID.
+            ValueError: If the response does not contain an account ID in the expected format.
+            Exception: For unexpected errors that occur during the API call.
         """
         log = self.get_logger()
         log.info(f"Creating new account for customer {customer_id} with type {account_type}")
@@ -78,20 +83,23 @@ class BankAPIBase(BaseClass):
 
             account_data = response.json()
             account_id = account_data.get('id')
+
             if account_id is None:
                 log.error("Failed to create account: 'id' field missing in response.")
                 raise ValueError("Account ID missing in response")
 
-
-            # Non-verbose log: only log a success message with the new account ID
             log.info(f"New account created with ID: {account_id}")
             return account_id
 
         except requests.exceptions.HTTPError as http_err:
-            log.error(f"HTTP error occurred during account creation: {http_err}")
-            raise
+            # Decode the response content and log the error
+            error_details = response.content.decode('utf-8',errors='ignore') \
+                if response.content else "No additional details."
+            log.error(f"HTTP error occurred during account creation: {http_err}. Details: {error_details}")
+            return {"error": str(http_err).split(":")[0], "details": error_details}
+
         except Exception as e:
-            log.error(f"An error occurred while creating the new account: {e}")
+            log.error(f"An unexpected error occurred while creating the new account: {e}")
             raise
 
     def deposit_to_account(self, account_id, amount):
